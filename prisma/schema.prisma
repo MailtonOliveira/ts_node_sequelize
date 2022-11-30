@@ -8,5 +8,24 @@ generator client {
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
-}on
+}
+
+model Pacientes {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  idade Int
+  posts Atendimentos[]
+}
+
+model Atendimentos {
+  id        Int     @id @default(autoincrement())
+  data_atendimento     DateTime
+  observacao   String?
+  published Boolean @default(false)
+  author    Pacientes    @relation(fields: [pacientes_id], references: [id])
+  pacientes_id  Int
+}
+
+
 
